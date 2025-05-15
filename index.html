@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog của Bechovang</title>
+    <style>
+        :root {
+            --primary-color: #0366d6;
+            --secondary-color: #24292e;
+            --text-color: #24292e;
+            --background-color: #f6f8fa;
+            --card-bg: #ffffff;
+            --border-color: #e1e4e8;
+            --code-bg: #f6f8fa;
+            --blockquote-bg: #f1f8ff;
+            --blockquote-border: #c8e1ff;
+            --modal-bg: rgba(0, 0, 0, 0.8);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo svg {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #79b8ff;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .blog-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .blog-title {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .blog-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #586069;
+            margin-bottom: 1rem;
+        }
+
+        .blog-date, .blog-tags {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-date svg, .blog-tags svg {
+            margin-right: 5px;
+        }
+
+        .tag {
+            background-color: #e1e4e8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: #24292e;
+        }
+
+        .tag:hover {
+            background-color: #d0d7de;
+        }
+
+        .blog-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--primary-color);
+        }
+
+        .blog-content h3 {
+            margin-top: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .blog-content p {
+            margin-bottom: 1rem;
+        }
+
+        .blog-content img {
+            display: block;
+            max-width: 60%;
+            height: auto;
+            border-radius: 4px;
+            margin: 1rem auto;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-content img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-bg);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-content {
+            animation: zoom 0.6s;
+        }
+        
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .blog-content blockquote {
+            background-color: var(--blockquote-bg);
+            border-left: 4px solid var(--blockquote-border);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .blog-content blockquote p {
+            margin: 0;
+        }
+
+        .blog-content code {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .blog-content pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .blog-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .blog-content ol, .blog-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content em {
+            color: #6a737d;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #79b8ff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin: 0 10px;
+            }
+
+            .blog-content {
+                padding: 1rem;
+            }
+
+            .blog-content img {
+                max-width: 90%;
+            }
+        }
+
+        .code-block-container {
+            position: relative;
+            margin-bottom: 1rem; 
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px; 
+            right: 8px; 
+            padding: 5px 8px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0.7; 
+            transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .code-block-container:hover .copy-btn {
+            opacity: 1; 
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3; 
+        }
+
+        .copy-btn svg {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" fill="white"/>
+                </svg>
+                Blog của Bechovang
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Bài viết</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-content">
+            <div class="blog-header">
+                <h1 class="blog-title">Cách Dùng AI và Overleaf Để Học Toán</h1>
+                <div class="blog-info">
+                    <div class="blog-date">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.5 1H3v2h1.5V1zm8 0H11v2h1.5V1zM11 14h1v-2.5h-1V14zm-7 0h1v-2.5H4V14zm-1-7h10V5.5H3V7zm9 5.5v-4.5H9.5V9H7v3.5H8v-2h1v2h3zm-8 0v-4.5h3V9H8v1H7v2.5H4zm0-10V4h8V2.5H4z"/>
+                        </svg>
+                        2025-05-15
+                    </div>
+                    <div class="blog-tags">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2 3.75C2 2.784 2.784 2 3.75 2h5.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 9.25 14h-5.5A1.75 1.75 0 0 1 2 12.25v-8.5zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h5.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-5.5zM6 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                        <a href="#" class="tag">FPT</a>
+                        <a href="#" class="tag">MAE</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Cách dùng AI để học toán hiệu quả</h2>
+            
+            <h3>Bước 1: Ra lệnh cho AI</h3>
+            <p>Đầu tiên, hãy nhắn tin cho AI:</p>
+            <div class="code-block-container">
+                <pre><code>Hãy dạy &lt;chủ đề cần học&gt; cho 1 đứa trẻ 5/10 tuổi có thể hiểu</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <p>T sẽ nhắn như sau:</p>
+            <div class="code-block-container">
+                <pre><code>Hãy dạy cách nhân ma trận cho 1 đứa trẻ 10 tuổi có thể hiểu</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <img src="images/ai-explain-matrix.png" alt="Ví dụ yêu cầu AI giải thích">
+            
+            <blockquote>
+                <p><strong>MẸO:</strong> khi muốn dùng AI học bất cứ gì. Hỏi nó ở mức 10 tuổi trước, vẫn chưa hiểu thì chuyển xuống 5 tuổi.</p>
+                <p><strong>Tại sao không hỏi thẳng 5 tuổi luôn ? :</strong> do 5 tuổi đôi lúc nó chỉ kỹ quá, như mấy thẳng không biết gì thật.</p>
+            </blockquote>
+            
+            <h3>Bước 2: Chuyển sang format LaTeX</h3>
+            <p>đọc bài giảng của nó nếu ưng ròi thì, nhắn tiếp:</p>
+            <div class="code-block-container">
+                <pre><code>Hãy chuyển nội dung trên thành format latex cho tôi</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <img src="images/latex-conversion.png" alt="Chuyển nội dung sang LaTeX">
+            
+            <p><em>* LaTeX là định dạng chuyên cho toán học</em></p>
+            
+            <blockquote>
+                <p>Lưu ý: Đến đây bạn có thể thấy LaTeX của trên giao diện AI đang bị lỗi font tiếng Việt, nhưng đừng vội đánh giá, cứ copy code LaTeX và paste vào Overleaf thử xem đã.</p>
+            </blockquote>
+            
+            <h3>Bước 3: Sử dụng Overleaf lưu bài</h3>
+            <p>Cách copy và paste vào Overleaf:</p>
+            <ol>
+                <li>Ấn vào nút code <div><img src="images/code-button.png" alt="Nút code"></div></li>
+                <li>Ấn nút copy <div><img src="images/copy-button.png" alt="Nút copy"></div></li>
+                <li>Qua Overleaf, chọn New Project → Blank Project <div><img src="images/overleaf-new-project.png" alt="Tạo project mới trong Overleaf"></div></li>
+                <li>Paste vào khung bên trái (Ctrl + A → Delete → Ctrl + V) <div><img src="images/overleaf-paste.png" alt="Paste code vào Overleaf"></div></li>
+                <li>Ấn Recompile <div><img src="images/overleaf-recompile.png" alt="Nút Recompile trong Overleaf"></div></li>
+                <li>Kết quả sẽ hiện ra như này đẹp - nét - không lỗi, là quá ngon, nhưng có thể sẽ lúc AI ngu và có lỗi, ai bị lỗi mà tự xử được thì nhắn tin mình. <div><img src="images/overleaf-result.png" alt="Kết quả sau khi biên dịch"></div></li>
+            </ol>
+            
+            <h3>Bước 5: Tải file PDF</h3>
+            <p>Như trên là xong rồi nhưng nếu muốn tải xuống PDF thì ấn vào nút download này <div><img src="images/overleaf-download.png" alt="Nút download PDF"></div></p>
+            <p>Vậy là xong! Giờ bạn đã có một bài học toán được trình bày chuyên nghiệp với công thức rõ ràng!</p>
+            
+            <h3>Mẹo khi vượt quá giới hạn tin nhắn mỗi ngày</h3>
+            <p>Tạo nhiều tài khoản gmail để dùng</p>
+            <img src="images/gmail-accounts.png" alt="Nhiều tài khoản Gmail">
+
+            <h2>References</h2>
+            <!-- You can add reference links or text here if needed -->
+
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Trang chủ</a>
+                <a href="#">Bài viết</a>
+                <a href="#">Liên hệ</a>
+                <a href="#">GitHub</a>
+            </div>
+            <p>&copy; 2025 Bechovang. Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <!-- Modal Image -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Image zoom functionality
+        const images = document.querySelectorAll('.blog-content img');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        
+        images.forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            }
+        });
+        
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Copy button functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const codeBlockContainer = button.parentElement;
+                    const preElement = codeBlockContainer.querySelector('pre');
+                    if (preElement) {
+                        const codeToCopy = preElement.innerText || preElement.textContent;
+                        navigator.clipboard.writeText(codeToCopy).then(() => {
+                            const originalButtonContent = button.innerHTML;
+                            button.innerHTML = 'Copied!';
+                            button.disabled = true;
+                            setTimeout(() => {
+                                button.innerHTML = originalButtonContent;
+                                button.disabled = false;
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

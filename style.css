@@ -390,4 +390,78 @@
             border-radius: 4px;
             /* display: inline-block; /* Ensures background only covers text content */
             /* margin-top: 5px; /* Adds a little space if it were a block */
+        }
+
+        /* Survey Styles */
+        .survey-separator {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            border: 0;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+        .survey-container {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            border: 1px solid #ddd; /* Light border for the container */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+
+        .survey-title {
+            font-family: var(--font-headings);
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .survey-intro {
+            font-family: var(--font-body);
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .google-form-embed-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-top: 100%; /* Adjust this percentage based on the aspect ratio of your form, e.g., for a form with a typical height, try values around 120-150% of the width to avoid excessive height or scrollbars */
+            max-width: 700px; /* Max width of the form */
+            margin: 0 auto; /* Center the form */
+        }
+
+        .google-form-embed-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .survey-title {
+                font-size: 1.5em;
+            }
+            .survey-container {
+                padding: 1rem;
+            }
+            .google-form-embed-wrapper {
+                padding-top: 150%; /* Adjust if needed for mobile view, might need more height relative to width */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .survey-title {
+                font-size: 1.3em;
+            }
+            .google-form-embed-wrapper {
+                padding-top: 180%; /* Further adjust for very small screens */
+            }
         } 

@@ -359,4 +359,35 @@
 
         .copy-btn svg {
             vertical-align: middle;
+        }
+
+        /* Styles for Zalo example messages */
+        .zalo-example {
+            background-color: #f0f2f5; /* Light grey, similar to some chat UIs */
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 1.5em 0;
+            font-family: var(--font-body); /* Use body font for readability */
+            line-height: 1.6;
+        }
+
+        .zalo-example pre.zalo-message-content {
+            white-space: pre-wrap;    /* Preserves line breaks and spaces */
+            word-wrap: break-word;      /* Ensures long lines wrap */
+            margin: 0;                  /* Reset margin for pre */
+            padding: 0;                 /* Reset padding for pre */
+            background-color: transparent; /* No background for pre itself */
+            border: none;               /* No border for pre itself */
+            font-family: inherit;       /* Inherit font from .zalo-example */
+            font-size: 0.95em;          /* Slightly smaller text */
+            color: #1c1e21;             /* Darker text color */
+        }
+
+        .highlighted-reply {
+            background-color: #d6eaff; /* Light blue background for highlight */
+            padding: 3px 6px;
+            border-radius: 4px;
+            /* display: inline-block; /* Ensures background only covers text content */
+            /* margin-top: 5px; /* Adds a little space if it were a block */
         } 

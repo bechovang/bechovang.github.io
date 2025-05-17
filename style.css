@@ -223,6 +223,14 @@
             margin: 2.5rem 0;
         }
 
+        .hr-short-subtle {
+            border: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 1rem auto; /* Reduced top/bottom margin, centered */
+            width: 50%; /* Makes the line shorter */
+        }
+
         .blog-content blockquote {
             background-color: var(--blockquote-bg);
             border-left: 6px solid var(--blockquote-border);

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Multiplication Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js"></script>
+    <style>
+        .matrix-container {
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">Matrix Multiplication Quiz</h1>
+        <div id="quiz-container" class="space-y-8">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        <div class="mt-8 text-center">
+            <button id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                Submit Answers
+            </button>
+            <button id="new-quiz-btn" class="ml-4 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                New Quiz
+            </button>
+        </div>
+        <div id="results" class="mt-8 hidden p-4 bg-gray-50 rounded-lg"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize quiz
+            generateNewQuiz();
+            
+            // New quiz button
+            document.getElementById('new-quiz-btn').addEventListener('click', generateNewQuiz);
+            
+            // Submit button
+            document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+        });
+
+        function generateNewQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';
+            document.getElementById('results').classList.add('hidden');
+            
+            // Store quiz data globally
+            window.quizData = [];
+            
+            // Generate 5 random matrix multiplication questions
+            for (let i = 0; i < 5; i++) {
+                const question = generateMatrixQuestion();
+                window.quizData.push(question);
+                
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question bg-gray-50 p-6 rounded-lg';
+                questionElement.innerHTML = `
+                    <h2 class="text-xl font-semibold mb-4">Question ${i + 1}:</h2>
+                    <div class="question-text mb-4 text-lg">${question.question}</div>
+                    <div class="options space-y-3">
+                        ${question.options.map((option, oIndex) => `
+                            <div class="option flex items-center">
+                                <input type="radio" id="q${i}-o${oIndex}" name="q${i}" value="${oIndex}" class="mr-3 h-5 w-5">
+                                <label for="q${i}-o${oIndex}" class="text-lg">${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                quizContainer.appendChild(questionElement);
+            }
+            
+            // Render MathJax after questions are added
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function generateMatrixQuestion() {
+            // Random matrix dimensions (2-3 for rows/columns)
+            const rA = Math.floor(Math.random() * 2) + 2; // 2-3 rows for A
+            const cA = Math.floor(Math.random() * 2) + 2; // 2-3 columns for A
+            const cB = Math.floor(Math.random() * 2) + 2; // 2-3 columns for B
+            
+            // Generate random matrices with values between -5 and 5
+            const A = generateRandomMatrix(rA, cA, -5, 5);
+            const B = generateRandomMatrix(cA, cB, -5, 5);
+            
+            // Calculate the correct product
+            const C = math.multiply(A, B);
+            
+            // Generate 3 wrong answers
+            const wrongAnswers = [];
+            for (let i = 0; i < 3; i++) {
+                wrongAnswers.push(generateWrongAnswer(A, B, C));
+            }
+            
+            // Shuffle options
+            const options = [matrixToString(C), ...wrongAnswers];
+            shuffleArray(options);
+            
+            const correctIndex = options.indexOf(matrixToString(C));
+            
+            return {
+                question: `What is the result of multiplying matrix A = ${matrixToString(A)} by matrix B = ${matrixToString(B)}?`,
+                options: options,
+                correctIndex: correctIndex,
+                explanation: `The correct answer is obtained by multiplying rows of A with columns of B.`,
+                matrices: { A, B, C }
+            };
+        }
+
+        function generateRandomMatrix(rows, cols, min, max) {
+            const matrix = [];
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < cols; j++) {
+                    row.push(Math.floor(Math.random() * (max - min + 1) + min));
+                }
+                matrix.push(row);
+            }
+            return matrix;
+        }
+
+        function matrixToString(matrix) {
+            if (!Array.isArray(matrix)) return "Invalid matrix";
+            
+            const rows = matrix.length;
+            if (rows === 0) return "[]";
+            
+            const cols = matrix[0].length;
+            
+            let str = "\\begin{bmatrix} ";
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    str += matrix[i][j];
+                    if (j < cols - 1) str += " & ";
+                }
+                if (i < rows - 1) str += " \\\\ ";
+            }
+            str += " \\end{bmatrix}";
+            
+            return `\\(${str}\\)`;
+        }
+
+        function generateWrongAnswer(A, B, correctProduct) {
+            // Different ways to generate wrong answers
+            const method = Math.floor(Math.random() * 3);
+            
+            switch(method) {
+                case 0:
+                    // Element-wise multiplication
+                    if (A.length === B.length && A[0].length === B[0].length) {
+                        const wrong = [];
+                        for (let i = 0; i < A.length; i++) {
+                            wrong.push([]);
+                            for (let j = 0; j < A[0].length; j++) {
+                                wrong[i].push(A[i][j] * B[i][j]);
+                            }
+                        }
+                        return matrixToString(wrong);
+                    }
+                    // If dimensions don't match for element-wise, fall through
+                
+                case 1:
+                    // Addition instead of multiplication
+                    if (A.length === B.length && A[0].length === B[0].length) {
+                        const wrong = math.add(A, B);
+                        return matrixToString(wrong);
+                    }
+                    // If dimensions don't match for addition, fall through
+                
+                case 2:
+                default:
+                    // Random matrix with same dimensions as correct answer
+                    const wrong = generateRandomMatrix(
+                        correctProduct.length, 
+                        correctProduct[0].length, 
+                        -10, 
+                        10
+                    );
+                    return matrixToString(wrong);
+            }
+        }
+
+        function submitQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            const questions = Array.from(quizContainer.querySelectorAll('.question'));
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2 class="text-2xl font-bold mb-4">Quiz Results</h2>';
+            resultsContainer.classList.remove('hidden');
+            
+            let score = 0;
+            
+            questions.forEach((questionElement, qIndex) => {
+                const selectedOption = questionElement.querySelector(`input[name="q${qIndex}"]:checked`);
+                const isCorrect = selectedOption && parseInt(selectedOption.value) === window.quizData[qIndex].correctIndex;
+                
+                if (isCorrect) score++;
+                
+                const resultElement = document.createElement('div');
+                resultElement.className = `mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`;
+                
+                // Create matrix display containers
+                const matrixAContainer = document.createElement('div');
+                matrixAContainer.className = 'matrix-container';
+                matrixAContainer.innerHTML = `Matrix A: ${window.quizData[qIndex].matrices.A.map(row => `[${row.join(', ')}]`).join('<br>')}`;
+                
+                const matrixBContainer = document.createElement('div');
+                matrixBContainer.className = 'matrix-container';
+                matrixBContainer.innerHTML = `Matrix B: ${window.quizData[qIndex].matrices.B.map(row => `[${row.join(', ')}]`).join('<br>')}`;
+                
+                const productContainer = document.createElement('div');
+                productContainer.className = 'matrix-container';
+                productContainer.innerHTML = `Product A×B: ${window.quizData[qIndex].matrices.C.map(row => `[${row.join(', ')}]`).join('<br>')}`;
+                
+                resultElement.innerHTML = `
+                    <h3 class="font-semibold ${isCorrect ? 'text-green-800' : 'text-red-800'}">
+                        Question ${qIndex + 1}: ${isCorrect ? 'Correct!' : 'Incorrect'}
+                    </h3>
+                    ${!isCorrect ? `
+                        <div class="mt-2">
+                            <p class="font-medium">Correct answer:</p>
+                            <div class="ml-4 mb-2">${window.quizData[qIndex].options[window.quizData[qIndex].correctIndex]}</div>
+                            <p class="mt-2 text-sm">${window.quizData[qIndex].explanation}</p>
+                            <div class="mt-4 space-y-4">
+                                ${matrixAContainer.outerHTML}
+                                ${matrixBContainer.outerHTML}
+                                ${productContainer.outerHTML}
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                resultsContainer.appendChild(resultElement);
+            });
+            
+            const scoreElement = document.createElement('div');
+            scoreElement.className = 'text-center mt-6 p-4 bg-blue-100 rounded-lg';
+            scoreElement.innerHTML = `
+                <p class="text-xl font-bold">Your score: ${score} out of 5</p>
+                <p class="mt-2">${score === 5 ? 'Perfect! You got all questions right!' : 
+                                 score >= 3 ? 'Good job! Keep practicing!' : 
+                                 'Keep studying matrix multiplication!'}</p>
+            `;
+            resultsContainer.appendChild(scoreElement);
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            
+            // Re-render MathJax for the results
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        }
+
+        // Utility functions
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+    </script>
+</body>
+</html>

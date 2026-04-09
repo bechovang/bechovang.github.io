@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitFlow: Quy Trình Quản Lý Mã Nguồn Hiệu Quả - Blog của Bechovang</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" fill="white"/>
+                </svg>
+                Blog của Bechovang
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="TakeNote.html">Ghi Chú AI & Obsidian</a></li>
+                    <li><a href="gitflow.html">GitFlow</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-content">
+            <div class="blog-header">
+                <h1 class="blog-title">GitFlow: Quy Trình Quản Lý Mã Nguồn Hiệu Quả Cho Dự Án Phần Mềm</h1>
+                <div class="blog-info">
+                    <div class="blog-date">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.5 1H3v2h1.5V1zm8 0H11v2h1.5V1zM11 14h1v-2.5h-1V14zm-7 0h1v-2.5H4V14zm-1-7h10V5.5H3V7zm9 5.5v-4.5H9.5V9H7v3.5H8v-2h1v2h3zm-8 0v-4.5h3V9H8v1H7v2.5H4zm0-10V4h8V2.5H4z"/>
+                        </svg>
+                        2026-04-09
+                    </div>
+                    <div class="blog-tags">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2 3.75C2 2.784 2.784 2 3.75 2h5.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 9.25 14h-5.5A1.75 1.75 0 0 1 2 12.25v-8.5zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h5.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-5.5zM6 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                        <a href="#" class="tag">Git</a>
+                        <a href="#" class="tag">DevOps</a>
+                        <a href="#" class="tag">Workflow</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Mở đầu</h2>
+            <p>Trong thế giới phát triển phần mềm hiện đại, <strong>Git</strong> đã trở thành công cụ quản lý mã nguồn không thể thiếu. Tuy nhiên, việc chỉ sử dụng Git là chưa đủ - để làm việc nhóm hiệu quả, tránh xung đột mã nguồn và duy trì chất lượng dự án, chúng ta cần một quy trình làm việc rõ ràng.</p>
+
+            <p><strong>GitFlow</strong> là một trong những workflow nổi tiếng nhất, được giới thiệu bởi Vincent Driessen vào năm 2010. Nó cung cấp một mô hình phân nhánh có cấu trúc chặt chẽ, giúp các đội phát triển quản lý mã nguồn một cách có tổ chức và hiệu quả.</p>
+
+            <blockquote>
+                <p><em>"GitFlow không chỉ là một quy trình - đó là một tư duy về cách tổ chức công việc phát triển phần mềm một cách có hệ thống."</em></p>
+            </blockquote>
+
+            <img src="images/bai3/gitflow-intro.png" alt="Giới thiệu GitFlow">
+
+            <p><em>Bài viết này sẽ hướng dẫn bạn từ khái niệm cơ bản đến thực hành GitFlow, kèm theo ví dụ minh họa và so sánh với các workflow khác.</em></p>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 1: Kiến Thức Cơ Bản</h2>
+
+            <h3>1.1 Git Workflow là gì?</h3>
+            <p><strong>Git Workflow</strong> là một quy trình làm việc hoặc phương pháp tổ chức việc sử dụng Git trong quản lý mã nguồn. Nó bao gồm các quy định về:</p>
+            <ul>
+                <li><strong>Cách tổ chức nhánh:</strong> Quy định đặt tên, tạo và sử dụng nhánh như main, develop, feature, hotfix, release...</li>
+                <li><strong>Quy trình tách và hợp nhất nhánh:</strong> Ví dụ nhánh feature phải tách từ develop, mã từ develop mới được phép merge vào main</li>
+                <li><strong>Quy tắc cộng tác:</strong> Quy định về Pull Request, code review trước khi merge...</li>
+            </ul>
+
+            <h3>1.2 Tại sao cần Git Workflow?</h3>
+
+            <h4>Vấn đề khi không có quy trình rõ ràng</h4>
+            <p>Khi làm việc nhóm mà không có workflow, các vấn đề thường gặp phải:</p>
+            <ul>
+                <li><strong>Xung đột mã nguồn (Merge Conflicts):</strong> Nhiều người cùng modify code ở cùng file</li>
+                <li><strong>Mất kiểm soát phiên bản:</strong> Không biết code nào đang ở production, code nào đang phát triển</li>
+                <li><strong>Khó khăn trong việc rollback:</strong> Khi có bug ở production, khó xác định version nào để rollback</li>
+                <li><strong>Thiếu quy trình review:</strong> Code được merge mà không có người kiểm tra chất lượng</li>
+            </ul>
+
+            <h4>Giải pháp từ Git Workflow</h4>
+            <img src="images/bai3/workflow-problems.png" alt="Vấn đề workflow và giải pháp">
+
+            <p>Git Workflow giúp:</p>
+            <ul>
+                <li>✅ Tránh xung đột khi hợp nhất</li>
+                <li>✅ Giữ mã nguồn production luôn sạch sẽ</li>
+                <li>✅ Cộng tác suôn sẻ với các thành viên trong nhóm</li>
+                <li>✅ Theo dõi và review thay đổi hiệu quả</li>
+            </ul>
+
+            <h3>1.3 GitFlow là gì?</h3>
+            <p><strong>GitFlow</strong> là một mô hình phân nhánh Git được thiết kế đặc biệt cho các dự án có chu kỳ phát hành định kỳ. Mô hình này sử dụng các nhánh tính năng (feature branch) và nhiều nhánh chính (primary branch) với vai trò cụ thể.</p>
+
+            <p><strong>Lịch sử ngắn gọn:</strong></p>
+            <ul>
+                <li><strong>2010:</strong> Vincent Driessen giới thiệu GitFlow trong bài viết "A successful Git branching model"</li>
+                <li><strong>2010-2020:</strong> GitFlow trở thành standard cho nhiều enterprise projects</li>
+                <li><strong>2020-nay:</strong> Vincent Driessen lưu ý GitFlow có thể không phù hợp cho continuous delivery, khuyến dùng GitHub Flow cho các dự án web app</li>
+            </ul>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 2: Cấu Trúc Chi Tiết Của GitFlow</h2>
+
+            <h3>2.1 Các nhánh chính (Main Branches)</h3>
+            <p>GitFlow sử dụng hai nhánh chính với vòng đời vô hạn:</p>
+
+            <img src="images/bai3/main-branches.png" alt="Các nhánh chính trong GitFlow">
+
+            <h4>2.1.1 Nhánh Master (hoặc Main)</h4>
+            <div class="code-block-container">
+                <pre><code>origin/master
+├── Chứa code production-ready
+├── Mỗi commit là một phiên bản release
+└── Được đánh tag với version number</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Vai trò:</strong></p>
+            <ul>
+                <li>Lưu trữ lịch sử phát hành chính thức</li>
+                <li>Luôn ở trạng thái ổn định, có thể deploy</li>
+                <li>Mỗi lần merge vào master = một phiên bản mới</li>
+            </ul>
+
+            <h4>2.1.2 Nhánh Develop</h4>
+            <div class="code-block-container">
+                <pre><code>origin/develop
+├── Chứa code đang phát triển
+├── Nơi tích hợp các feature hoàn thành
+└── Dùng cho nightly builds</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Vai trò:</strong></p>
+            <ul>
+                <li>Là nhánh tích hợp (integration branch)</li>
+                <li>Chứa các tính năng sắp phát hành</li>
+                <li>Nền tảng cho việc tạo feature branches</li>
+            </ul>
+
+            <h3>2.2 Các nhánh phụ (Supporting Branches)</h3>
+            <p>Ngoài hai nhánh chính, GitFlow sử dụng các nhánh phụ với vòng đời giới hạn:</p>
+
+            <h4>2.2.1 Feature Branches</h4>
+            <img src="images/bai3/feature-branches.png" alt="Feature Branches trong GitFlow">
+
+            <p><strong>Đặc điểm:</strong></p>
+            <ul>
+                <li><strong>Tách từ:</strong> develop</li>
+                <li><strong>Hợp nhất vào:</strong> develop</li>
+                <li><strong>Quy tắc đặt tên:</strong> <code>feature/</code> hoặc bất kỳ tên nào trừ master, develop, release-*, hotfix-*</li>
+            </ul>
+
+            <p><strong>Mục đích:</strong></p>
+            <ul>
+                <li>Phát triển tính năng mới</li>
+                <li>Cô lập code để không ảnh hưởng develop</li>
+                <li>Cho phép review code trước khi merge</li>
+            </ul>
+
+            <p><strong>Ví dụ lệnh:</strong></p>
+            <div class="code-block-container">
+                <pre><code># Tạo feature branch
+git checkout develop
+git checkout -b feature/user-authentication
+
+# Hoàn thành feature
+git checkout develop
+git merge --no-ff feature/user-authentication
+git branch -d feature/user-authentication
+git push origin develop</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>2.2.2 Release Branches</h4>
+            <img src="images/bai3/release-branches.png" alt="Release Branches trong GitFlow">
+
+            <p><strong>Đặc điểm:</strong></p>
+            <ul>
+                <li><strong>Tách từ:</strong> develop</li>
+                <li><strong>Hợp nhất vào:</strong> develop VÀ master</li>
+                <li><strong>Quy tắc đặt tên:</strong> <code>release-*</code></li>
+            </ul>
+
+            <p><strong>Mục đích:</strong></p>
+            <ul>
+                <li>Chuẩn bị cho release mới</li>
+                <li>Fix bug nhỏ trước release</li>
+                <li>Update metadata (version number, build dates)</li>
+                <li>Không thêm feature mới</li>
+            </ul>
+
+            <p><strong>Quy trình:</strong></p>
+            <div class="code-block-container">
+                <pre><code># Bắt đầu release
+git checkout develop
+git checkout -b release-1.2.0
+
+# Bump version
+# (Edit files to reflect new version)
+
+# Hoàn thành release
+git checkout master
+git merge --no-ff release-1.2.0
+git tag -a 1.2.0 -m "Release version 1.2.0"
+
+git checkout develop
+git merge --no-ff release-1.2.0
+git branch -d release-1.2.0</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>2.2.3 Hotfix Branches</h4>
+            <img src="images/bai3/hotfix-branches.png" alt="Hotfix Branches trong GitFlow">
+
+            <p><strong>Đặc điểm:</strong></p>
+            <ul>
+                <li><strong>Tách từ:</strong> master</li>
+                <li><strong>Hợp nhất vào:</strong> develop VÀ master</li>
+                <li><strong>Quy tắc đặt tên:</strong> <code>hotfix-*</code></li>
+            </ul>
+
+            <p><strong>Mục đích:</strong></p>
+            <ul>
+                <li>Sửa lỗi khẩn cấp ở production</li>
+                <li>Không làm gián đoạn workflow hiện tại</li>
+                <li>Cho phép fix nhanh mà không cần tạo release branch</li>
+            </ul>
+
+            <p><strong>Quy trình:</strong></p>
+            <div class="code-block-container">
+                <pre><code># Bắt đầu hotfix
+git checkout master
+git checkout -b hotfix-1.2.1
+
+# Fix the bug...
+git commit -m "Fix critical bug in production"
+
+# Hoàn thành hotfix
+git checkout master
+git merge --no-ff hotfix-1.2.1
+git tag -a 1.2.1 -m "Hotfix version 1.2.1"
+
+git checkout develop
+git merge --no-ff hotfix-1.2.1
+git branch -d hotfix-1.2.1</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>2.3 Sơ đồ tổng quan GitFlow</h3>
+            <img src="images/bai3/gitflow-overview.png" alt="Sơ đồ tổng quan GitFlow">
+
+            <p>Sơ đồ trên cho thấy:</p>
+            <ul>
+                <li><strong>master:</strong> Nhánh chính cho production</li>
+                <li><strong>develop:</strong> Nhánh tích hợp features</li>
+                <li><strong>feature*:</strong> Các nhánh phát triển tính năng</li>
+                <li><strong>release*:</strong> Các nhánh chuẩn bị release</li>
+                <li><strong>hotfix*:</strong> Các nhánh sửa lỗi khẩn cấp</li>
+            </ul>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 3: Quy Trình Chi Tiết</h2>
+
+            <h3>3.1 Workflow hoàn chỉnh</h3>
+
+            <h4>Bước 1: Khởi tạo dự án</h4>
+            <div class="code-block-container">
+                <pre><code># Clone repository
+git clone &lt;repository-url&gt;
+cd &lt;project-name&gt;
+
+# Tạo develop branch
+git branch develop
+git push -u origin develop
+
+# Hoặc sử dụng git-flow extension
+git flow init</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Cấu hình git-flow:</strong></p>
+            <div class="code-block-container">
+                <pre><code>Branch name for production releases: [master]
+Branch name for "next release" development: [develop]
+
+Feature branches? [feature/]
+Release branches? [release/]
+Hotfix branches? [hotfix/]
+Support branches? [support/]
+Version tag prefix? []</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>Bước 2: Phát triển tính năng (Feature Development)</h4>
+            <div class="code-block-container">
+                <pre><code># Bắt đầu feature
+git flow feature start user-login
+
+# Làm việc trên feature...
+# Viết code, test, commit...
+
+# Hoàn thành feature
+git flow feature finish user-login</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Quy trình chi tiết:</strong></p>
+            <ol>
+                <li>Tách feature branch từ develop</li>
+                <li>Phát triển tính năng độc lập</li>
+                <li>Tạo Pull Request để review</li>
+                <li>Merge vào develop sau khi được approve</li>
+                <li>Xóa feature branch</li>
+            </ol>
+
+            <h4>Bước 3: Chuẩn bị release</h4>
+            <div class="code-block-container">
+                <pre><code># Khi develop đã đủ features cho một release
+git flow release start 1.0.0
+
+# Testing, fix bugs, bump version...
+
+# Hoàn thành release
+git flow release finish 1.0.0</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Các công việc trên release branch:</strong></p>
+            <ul>
+                <li>Fix bug nhỏ</li>
+                <li>Update version number</li>
+                <li>Update changelog</li>
+                <li>Prepare release notes</li>
+                <li>Final testing</li>
+            </ul>
+
+            <h4>Bước 4: Sửa lỗi khẩn cấp (Hotfix)</h4>
+            <div class="code-block-container">
+                <pre><code># Có bug critical ở production
+git flow hotfix start critical-bug-1.0.1
+
+# Fix bug...
+
+# Deploy fix ngay lập tức
+git flow hotfix finish critical-bug-1.0.1</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>3.2 Quy tắc quan trọng</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quy tắc</th>
+                        <th>Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Quy tắc 1</strong></td>
+                        <td>Feature branch KHÔNG BAO GIỜ merge trực tiếp vào master</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quy tắc 2</strong></td>
+                        <td>Tất cả changes phải đi qua develop trước khi vào master</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quy tắc 3</strong></td>
+                        <td>Hotfix branch là NHẤT nhánh được tách trực tiếp từ master</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quy tắc 4</strong></td>
+                        <td>Release branch phải merge vào CẢ master VÀ develop</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quy tắc 5</strong></td>
+                        <td>Luôn dùng flag <code>--no-ff</code> khi merge để preserve history</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 4: So Sánh Với Workflow Khác</h2>
+
+            <h3>4.1 Bảng so sánh chi tiết</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tiêu chí</th>
+                        <th>Centralized</th>
+                        <th>GitHub Flow</th>
+                        <th>Feature Branch</th>
+                        <th><strong>Gitflow</strong></th>
+                        <th>Forking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cấu trúc</strong></td>
+                        <td>Chỉ main</td>
+                        <td>main + feature</td>
+                        <td>main + develop + feature</td>
+                        <td><strong>main + develop + feature + release + hotfix</strong></td>
+                        <td>Mỗi người có kho riêng</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Độ phức tạp</strong></td>
+                        <td>Cực kỳ đơn giản</td>
+                        <td>Đơn giản</td>
+                        <td>Phức tạp vừa phải</td>
+                        <td><strong>Phức tạp nhất</strong></td>
+                        <td>Phức tạp khi nhiều PR</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mức độ kiểm soát</strong></td>
+                        <td>Thấp</td>
+                        <td>Trung bình</td>
+                        <td>Cao</td>
+                        <td><strong>Rất cao</strong></td>
+                        <td>Cao</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CI/CD</strong></td>
+                        <td>Hạn chế</td>
+                        <td>Tốt</td>
+                        <td>Tốt</td>
+                        <td><strong>Tốt cho dự án dài hạn</strong></td>
+                        <td>Tùy vào PR</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Xung đột mã</strong></td>
+                        <td>Cao</td>
+                        <td>Thấp</td>
+                        <td>Thấp</td>
+                        <td><strong>Trung bình</strong></td>
+                        <td>Thấp</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chu kỳ phát hành</strong></td>
+                        <td>Không có</td>
+                        <td>Không có</td>
+                        <td>Cần thêm quy trình</td>
+                        <td><strong>Có chu kỳ rõ ràng</strong></td>
+                        <td>Không phù hợp</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phù hợp nhất</strong></td>
+                        <td>Dự án cá nhân</td>
+                        <td>Dự án nhỏ, CD</td>
+                        <td>Dự án vừa-lớn</td>
+                        <td><strong>Dự án lớn, có release cycle</strong></td>
+                        <td>Open source</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.2 Khi nào nên dùng GitFlow?</h3>
+
+            <p><strong>Nên dùng GitFlow khi:</strong></p>
+            <ul>
+                <li>✅ Dự án có <strong>chu kỳ phát hành định kỳ</strong> (tháng, quý)</li>
+                <li>✅ Cần <strong>hỗ trợ nhiều phiên bản</strong> song song</li>
+                <li>✅ Dự án <strong>lớn</strong> với nhiều developers</li>
+                <li>✅ Cần <strong>quy trình chặt chẽ</strong> cho release management</li>
+                <li>✅ Có <strong>team riêng</strong> cho QA và release preparation</li>
+            </ul>
+
+            <p><strong>KHÔNG nên dùng GitFlow khi:</strong></p>
+            <ul>
+                <li>❌ Dự án <strong>nhỏ</strong> với 1-3 developers</li>
+                <li>❌ Áp dụng <strong>Continuous Delivery</strong> (deploy nhiều lần/ngày)</li>
+                <li>❌ Team mới làm quen với Git</li>
+                <li>❌ Dự án cần <strong>flexibility</strong> cao</li>
+                <li>❌ Web apps với <strong>continuous deployment</strong></li>
+            </ul>
+
+            <h3>4.3 So sánh với GitHub Flow</h3>
+            <img src="images/bai3/github-flow-comparison.png" alt="So sánh GitFlow và GitHub Flow">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Đặc điểm</th>
+                        <th>GitHub Flow</th>
+                        <th>Gitflow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nhánh chính</td>
+                        <td>main</td>
+                        <td>master + develop</td>
+                    </tr>
+                    <tr>
+                        <td>Feature branch</td>
+                        <td>Từ main</td>
+                        <td>Từ develop</td>
+                    </tr>
+                    <tr>
+                        <td>Release branch</td>
+                        <td>Không có</td>
+                        <td>Có</td>
+                    </tr>
+                    <tr>
+                        <td>Hotfix branch</td>
+                        <td>Từ main (feature)</td>
+                        <td>Từ master (dedicated)</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>Từ main</td>
+                        <td>Từ master (tagged)</td>
+                    </tr>
+                    <tr>
+                        <td>Versioning</td>
+                        <td>Không bắt buộc</td>
+                        <td>Bắt buộc (tags)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 5: Thực Hành Và Ví Dụ</h2>
+
+            <h3>5.1 Ví dụ thực tế: Dự án E-commerce</h3>
+
+            <h4>Bối cảnh</h4>
+            <ul>
+                <li>Dự án: E-commerce website</li>
+                <li>Team: 5 developers</li>
+                <li>Release cycle: 2 tuần/lần</li>
+                <li>Yêu cầu: Support multiple versions in production</li>
+            </ul>
+
+            <h4>Kịch bản 1: Thêm tính năng Cart</h4>
+            <div class="code-block-container">
+                <pre><code># Day 1: Developer A bắt đầu feature Cart
+git flow feature start shopping-cart
+
+# Day 1-5: Developer A làm việc trên feature
+# (Commits, test, local development)
+
+# Day 5: Hoàn thành feature
+git flow feature finish shopping-cart
+
+# Kết quả: Code được merge vào develop
+# Team khác có thể thấy và review</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>Kịch bản 2: Chuẩn bị Release 1.2</h4>
+            <div class="code-block-container">
+                <pre><code># Day 10: Develop đủ features cho release 1.2
+git flow release start 1.2.0
+
+# Day 10-12: Team QA test trên release branch
+# Fix bugs phát hiện
+# Update version number
+
+# Day 12: Deploy to production
+git flow release finish 1.2.0
+git push origin master
+git push origin develop
+git push --tags</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>Kịch bản 3: Hotfix bug critical</h4>
+            <div class="code-block-container">
+                <pre><code># Day 15: Có bug critical ở production 1.2.0
+git flow hotfix start payment-crash-1.2.1
+
+# Fix ngay lập tức
+# Test locally
+# Deploy to staging
+
+# Hoàn thành hotfix
+git flow hotfix finish payment-crash-1.2.1
+
+# Deploy to production immediately</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>5.2 Demo: Thiết lập GitFlow từ con số 0</h3>
+
+            <h4>Bước 1: Cài đặt git-flow</h4>
+
+            <p><strong>Mac:</strong></p>
+            <div class="code-block-container">
+                <pre><code>brew install git-flow-avh</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Linux (Ubuntu/Debian):</strong></p>
+            <div class="code-block-container">
+                <pre><code>sudo apt-get install git-flow</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p><strong>Windows:</strong></p>
+            <div class="code-block-container">
+                <pre><code># Sử dụng Git for Windows hoặc WSL
+# git-flow thường đã được tích hợp</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>Bước 2: Khởi tạo dự án mới</h4>
+            <div class="code-block-container">
+                <pre><code># Tạo repository mới
+mkdir my-project
+cd my-project
+git init
+
+# Commit khởi tạo
+echo "# My Project" > README.md
+git add README.md
+git commit -m "Initial commit"
+
+# Khởi tạo git-flow
+git flow init
+
+# Cấu hình như hướng dẫn ở phần 3.1</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>Bước 3: Tạo feature đầu tiên</h4>
+            <div class="code-block-container">
+                <pre><code># Bắt đầu feature
+git flow feature start hello-world
+
+# Sửa code
+echo "console.log('Hello World!');" > app.js
+git add app.js
+git commit -m "Add hello world functionality"
+
+# Hoàn thành feature
+git flow feature finish hello-world
+
+# Kết quả: Code đã ở develop</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>5.3 Git Flow AVH Extension</h3>
+            <p><strong>Git Flow AVH</strong> là bộ mở rộng Git giúp làm việc với GitFlow dễ dàng hơn:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lệnh</th>
+                        <th>Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>git flow init</code></td>
+                        <td>Khởi tạo git-flow</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow feature start NAME</code></td>
+                        <td>Bắt đầu feature</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow feature finish NAME</code></td>
+                        <td>Hoàn thành feature</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow release start VERSION</code></td>
+                        <td>Bắt đầu release</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow release finish VERSION</code></td>
+                        <td>Hoàn thành release</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow hotfix start VERSION</code></td>
+                        <td>Bắt đầu hotfix</td>
+                    </tr>
+                    <tr>
+                        <td><code>git flow hotfix finish VERSION</code></td>
+                        <td>Hoàn thành hotfix</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 6: Kiến Thức Mở Rộng</h2>
+
+            <h3>6.1 Lưu ý quan trọng từ Vincent Driessen (2020)</h3>
+            <img src="images/bai3/vincent-driessen-note.png" alt="Lưu ý từ Vincent Driessen">
+
+            <blockquote>
+                <p><em>"This model was conceived in 2010, now more than 10 years ago... If your team is doing continuous delivery of software, I would suggest to adopt a much simpler workflow (like GitHub Flow) instead of trying to shoehorn git-flow into your team."</em></p>
+            </blockquote>
+
+            <p><strong>Khi nào nên THẬN TRỌNG với GitFlow:</strong></p>
+            <ul>
+                <li>Dự án web apps với continuous delivery</li>
+                <li>Deploy nhiều lần/ngày</li>
+                <li>Không cần support multiple versions</li>
+                <li>Team nhỏ cần flexibility</li>
+            </ul>
+
+            <h3>6.2 Best Practices</h3>
+
+            <h4>6.2.1 Quy tắc đặt tên nhánh</h4>
+            <div class="code-block-container">
+                <pre><code># Tốt ✅
+feature/user-authentication
+feature/payment-gateway
+release/v1.2.0
+hotfix/critical-bug-login
+
+# Tránh ❌
+feature1
+login-fix
+release-1</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>6.2.2 Commit message</h4>
+            <div class="code-block-container">
+                <pre><code># Tốt ✅
+feat: add user authentication
+fix: resolve payment gateway timeout
+docs: update API documentation
+
+# Tránh ❌
+update
+fix bug
+done</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h4>6.2.3 Chiến lược Merge</h4>
+            <div class="code-block-container">
+                <pre><code># Luôn dùng --no-ff để preserve history
+git merge --no-ff feature/new-feature
+
+# Điều này giữ được context của feature branch
+# Giảm merge conflicts về sau</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>6.3 Tích hợp CI/CD</h3>
+            <img src="images/bai3/cicd-pipeline.png" alt="Tích hợp CI/CD với GitFlow">
+
+            <p><strong>GitFlow với CI/CD Pipeline:</strong></p>
+
+            <div class="code-block-container">
+                <pre><code># .gitlab-ci.yml example
+stages:
+  - build
+  - test
+  - deploy
+
+# Build on every branch
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  only:
+    - branches
+
+# Test on develop and feature branches
+test:
+  stage: test
+  script:
+    - npm run test
+  only:
+    - develop
+    - /^feature\/.*$/
+
+# Deploy to staging from release branches
+deploy_staging:
+  stage: deploy
+  script:
+    - deploy-to-staging.sh
+  only:
+    - /^release\/.*$/
+
+# Deploy to production from master
+deploy_production:
+  stage: deploy
+  script:
+    - deploy-to-prod.sh
+  only:
+    - master
+  when: manual</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>6.4 GitFlow vs Modern Practices</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Traditional GitFlow</th>
+                        <th>Modern GitFlow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Release branch dài ngày</td>
+                        <td>Release branch ngắn (hours)</td>
+                    </tr>
+                    <tr>
+                        <td>Manual deployment</td>
+                        <td>Automated CI/CD</td>
+                    </tr>
+                    <tr>
+                        <td>Long-lived feature branches</td>
+                        <td>Short-lived feature branches</td>
+                    </tr>
+                    <tr>
+                        <td>Tag manually</td>
+                        <td>Tag automatically</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 7: Ưu Điểm Và Nhược Điểm</h2>
+
+            <h3>7.1 Ưu điểm của GitFlow</h3>
+
+            <h4>1. Cấu trúc rõ ràng</h4>
+            <img src="images/bai3/clear-structure.png" alt="Cấu trúc rõ ràng của GitFlow">
+
+            <ul>
+                <li>Mỗi nhánh có mục đích rõ ràng</li>
+                <li>Dễ hiểu cho team members mới</li>
+                <li>Quy trình chuẩn hóa cho toàn team</li>
+            </ul>
+
+            <h4>2. Hỗ trợ release management</h4>
+            <ul>
+                <li>Chuẩn bị release một cách có tổ chức</li>
+                <li>Có môi trường staging riêng (release branch)</li>
+                <li>Dễ dàng rollback khi cần</li>
+            </ul>
+
+            <h4>3. Code quality assurance</h4>
+            <ul>
+                <li>Pull request cho tất cả features</li>
+                <li>Code review trước khi merge</li>
+                <li>Tách biệt giữa development và production</li>
+            </ul>
+
+            <h4>4. Parallel development</h4>
+            <ul>
+                <li>Multiple features có thể phát triển song song</li>
+                <li>Không chặn nhau</li>
+                <li>Hotfix không làm gián đoạn feature development</li>
+            </ul>
+
+            <h3>7.2 Nhược điểm của GitFlow</h3>
+
+            <h4>1. Độ phức tạp cao</h4>
+            <img src="images/bai3/complexity.png" alt="Độ phức tạp của GitFlow">
+
+            <ul>
+                <li>Nhiều nhánh cần quản lý</li>
+                <li>Quy trình merge phức tạp</li>
+                <li>Cần thời gian để làm quen</li>
+            </ul>
+
+            <h4>2. Merge conflicts tiềm ẩn</h4>
+            <ul>
+                <li>Long-lived branches dễ gây conflicts</li>
+                <li>Feature branches diverge từ develop</li>
+                <li>Cần effort để resolve</li>
+            </ul>
+
+            <h4>3. Không phù hợp continuous delivery</h4>
+            <ul>
+                <li>Release cycle dài</li>
+                <li>Không tối ưu cho deploy nhiều lần/ngày</li>
+                <li>Overkill cho small projects</li>
+            </ul>
+
+            <h3>7.3 Khi nào KHÔNG nên dùng</h3>
+            <p>Dùng <strong>GitHub Flow</strong> hoặc <strong>Feature Branch Workflow</strong> thay thế khi:</p>
+            <ul>
+                <li>Startup với rapid iteration</li>
+                <li>Web apps với continuous deployment</li>
+                <li>Team nhỏ (< 5 developers)</li>
+                <li>Dự án đơn giản</li>
+            </ul>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Phần 8: Hướng Dẫn Áp Dụng</h2>
+
+            <h3>8.1 Bước 1: Đánh giá dự án</h3>
+            <p>Trước khi áp dụng GitFlow, trả lời các câu hỏi:</p>
+            <ol>
+                <li><strong>Quy mô team:</strong> Bao nhiêu developers?</li>
+                <li><strong>Release cycle:</strong> Release bao lâu/lần?</li>
+                <li><strong>Project type:</strong> Web app, mobile, hay desktop?</li>
+                <li><strong>Team experience:</strong> Team có kinh nghiệm với Git không?</li>
+                <li><strong>CI/CD requirement:</strong> Cần automation mức nào?</li>
+            </ol>
+
+            <h3>8.2 Bước 2: Đào tạo team</h3>
+            <div class="code-block-container">
+                <pre><code>## Training Plan
+
+### Week 1: Git Basics
+- git clone, pull, push
+- git branch, checkout
+- git merge, rebase
+- Resolve conflicts
+
+### Week 2: GitFlow Concepts
+- Main branches (master, develop)
+- Supporting branches (feature, release, hotfix)
+- Workflow diagram
+- Naming conventions
+
+### Week 3: Hands-on Practice
+- Create feature branch
+- Make pull request
+- Review and merge
+- Create release
+- Handle hotfix
+
+### Week 4: CI/CD Integration
+- Setup pipeline
+- Automate testing
+- Automate deployment
+- Monitor and fix issues</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>8.3 Bước 3: Thiết lập tools</h3>
+            <p><strong>Các công cụ hỗ trợ:</strong></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Công cụ</th>
+                        <th>Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Git Flow AVH</strong></td>
+                        <td>CLI extension cho git-flow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SourceTree</strong></td>
+                        <td>GUI hỗ trợ git-flow visualization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GitKraken</strong></td>
+                        <td>Git client với git-flow support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GitHub/GitLab/Bitbucket</strong></td>
+                        <td>Pull request và code review</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>8.4 Bước 4: Tài liệu hóa</h3>
+            <div class="code-block-container">
+                <pre><code>## Team GitFlow Guidelines
+
+### Branch Naming
+- feature: `feature/&lt;jira-ticket&gt;-short-description`
+- release: `release/vX.Y.Z`
+- hotfix: `hotfix/&lt;jira-ticket&gt;-critical-description`
+
+### Commit Format
+- feat: new feature
+- fix: bug fix
+- docs: documentation
+- style: formatting
+- refactor: refactoring
+- test: adding tests
+- chore: maintenance
+
+### Pull Request Template
+## Description
+[What this PR does]
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+
+## Testing
+[How to test]
+
+## Checklist
+- [ ] Code follows style guide
+- [ ] Self-reviewed
+- [ ] Commented complex code
+- [ ] Documentation updated
+- [ ] No new warnings
+- [ ] Added tests
+- [ ] All tests pass</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <hr class="hr-short-subtle">
+
+            <h2>Kết Luận</h2>
+
+            <h3>Ba điểm cốt lõi cần nhớ</h3>
+
+            <h4>1. GitFlow là một công cụ, không phải đích đến</h4>
+            <ul>
+                <li>Chọn workflow dựa trên nhu cầu dự án</li>
+                <li>Không áp dụng machine-like</li>
+                <li>Linh hoạt khi cần thiết</li>
+            </ul>
+
+            <h4>2. Cấu trúc nhánh rõ ràng = Team hiệu quả</h4>
+            <ul>
+                <li>Mỗi branch có mục đích</li>
+                <li>Quy trình merge có tổ chức</li>
+                <li>Code quality được đảm bảo</li>
+            </ul>
+
+            <h4>3. Hiểu khi nào KHÔNG nên dùng GitFlow</h4>
+            <ul>
+                <li>Continuous delivery → GitHub Flow</li>
+                <li>Small team → Feature Branch Workflow</li>
+                <li>Open source → Forking Workflow</li>
+            </ul>
+
+            <h3>Tương lai của Git Workflows</h3>
+            <p>Xu hướng hiện tại đang chuyển dịch:</p>
+            <ul>
+                <li><strong>Trunk-Based Development:</strong> Mọi người work on main</li>
+                <li><strong>Continuous Integration:</strong> Merge sớm, merge thường xuyên</li>
+                <li><strong>Automated Testing:</strong> Quality gates tự động</li>
+                <li><strong>Progressive Delivery:</strong> Feature flags, canary releases</li>
+            </ul>
+
+            <p>Tuy nhiên, <strong>GitFlow vẫn có giá trị</strong> cho:</p>
+            <ul>
+                <li>Enterprise projects</li>
+                <li>Scheduled releases</li>
+                <li>Versioned software</li>
+                <li>Multi-version support</li>
+            </ul>
+
+            <h3>Lời kết</h3>
+            <p>GitFlow là một workflow đã được chứng minh qua hơn 10 năm sử dụng. Nó không phải là giải pháp cho mọi dự án, nhưng cho những dự án phù hợp, GitFlow cung cấp một framework có cấu trúc để quản lý phát hành, đảm bảo chất lượng, và hỗ trợ team làm việc hiệu quả.</p>
+
+            <blockquote>
+                <p><strong>"Choose the right tool for the job. GitFlow is a powerful tool when used appropriately."</strong></p>
+            </blockquote>
+
+            <hr>
+
+            <h2>Tài Liệu Tham Khảo</h2>
+            <ol>
+                <li><strong>Vincent Driessen</strong> - "A successful Git branching model" - <a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener noreferrer">Link</a></li>
+                <li><strong>Atlassian Git Tutorials</strong> - "Gitflow Workflow" - <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow" target="_blank" rel="noopener noreferrer">Link</a></li>
+                <li><strong>TopDev Vietnam</strong> - "Gitflow là gì?" - <a href="https://topdev.vn/blog/gitflow-la-gi/" target="_blank" rel="noopener noreferrer">Link</a></li>
+                <li><strong>ITviec</strong> - "Git Workflow: Cách áp dụng kỹ thuật quản lý mã nguồn hiệu quả" - <a href="https://itviec.com/blog/git-workflow-la-gi/" target="_blank" rel="noopener noreferrer">Link</a></li>
+                <li><strong>Git Flow AVH</strong> - GitHub Repository - <a href="https://github.com/petervanderdoes/gitflow-avh" target="_blank" rel="noopener noreferrer">Link</a></li>
+            </ol>
+
+            <hr>
+
+            <h2>Phụ Lục</h2>
+
+            <h3>A. Git Commands Cheatsheet</h3>
+            <div class="code-block-container">
+                <pre><code># Basic Commands
+git init                    # Khởi tạo repository
+git clone &lt;url&gt;             # Clone repository
+git status                  # Xem trạng thái
+git add &lt;file&gt;              # Stage changes
+git commit -m "message"     # Commit changes
+git push                    # Push to remote
+git pull                    # Pull from remote
+
+# Branching
+git branch                  # Liệt kê branches
+git branch &lt;name&gt;           # Tạo branch mới
+git checkout &lt;branch&gt;       # Chuyển branch
+git checkout -b &lt;name&gt;      # Tạo và chuyển branch
+git merge &lt;branch&gt;          # Merge branch
+git branch -d &lt;branch&gt;      # Xóa branch
+
+# Git Flow Commands
+git flow init               # Khởi tạo git-flow
+git flow feature start &lt;name&gt;      # Bắt đầu feature
+git flow feature finish &lt;name&gt;     # Hoàn thành feature
+git flow release start &lt;version&gt;   # Bắt đầu release
+git flow release finish &lt;version&gt;  # Hoàn thành release
+git flow hotfix start &lt;version&gt;    # Bắt đầu hotfix
+git flow hotfix finish &lt;version&gt;   # Hoàn thành hotfix</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>B. Workflow Decision Tree</h3>
+            <div class="code-block-container">
+                <pre><code>Bắt đầu
+   │
+   ├─ Team size < 5?
+   │   ├─ Yes → GitHub Flow hoặc Feature Branch
+   │   └─ No → Tiếp tục
+   │
+   ├─ Continuous Delivery?
+   │   ├─ Yes → GitHub Flow
+   │   └─ No → Tiếp tục
+   │
+   ├─ Scheduled Releases?
+   │   ├─ Yes → GitFlow
+   │   └─ No → Feature Branch
+   │
+   └─ Multiple Versions?
+       ├─ Yes → GitFlow
+       └─ No → Feature Branch hoặc GitHub Flow</code></pre>
+                <button class="copy-btn" aria-label="Copy code snippet">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <h3>C. Common Issues & Solutions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vấn đề</th>
+                        <th>Giải pháp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Merge conflicts</td>
+                        <td>Dùng <code>git mergetool</code>, communicate với team</td>
+                    </tr>
+                    <tr>
+                        <td>Lost commits</td>
+                        <td>Dùng <code>git reflog</code>, avoid force push</td>
+                    </tr>
+                    <tr>
+                        <td>Long-lived branches</td>
+                        <td>Rebase often, keep branches short</td>
+                    </tr>
+                    <tr>
+                        <td>Complex history</td>
+                        <td>Dùng <code>--no-ff</code> flag, document decisions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2>Tác Giả</h2>
+            <p><strong>Nguyễn Ngọc Phúc</strong> và <strong>Đàm Lê Tuấn Anh</strong></p>
+
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Trang chủ</a>
+                <a href="gitflow.html">Bài viết</a>
+                <a href="#">Liên hệ</a>
+                <a href="#">GitHub</a>
+                <a href="https://www.facebook.com/profile.php?id=100036949387211" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;" viewBox="0 0 16 16">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                    Facebook
+                </a>
+            </div>
+            <p>&copy; 2026 Bechovang. Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Image -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script src="syntax-highlight.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
